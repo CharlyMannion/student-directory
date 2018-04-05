@@ -1,18 +1,24 @@
 #first we print the list of students
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter the name, cohort and age of each student (separated by commas e.g. Voldemort, november, 150)"
   puts "To finish, just hit return twice"
   #create an empty array
   students = []
   #get the first name
-  name = gets.chomp
+  individual_student_array = gets.chomp.split(", ")
+  name = individual_student_array[0]
+  cohort = individual_student_array[1]
+  age = individual_student_array[2]
   #while the name is not empty, repeat this code
-  while !name.empty? do
+  while !individual_student_array.empty? do
     #add the student to the hash array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: cohort, age: age}
     puts "Now we have #{students.count} students"
     #get another name from the user
-    name = gets.chomp
+    individual_student_array = gets.chomp.split(", ")
+    name = individual_student_array[0]
+    cohort = individual_student_array[1]
+    age = individual_student_array[2]
   end
   #return the array of students
   students
@@ -25,8 +31,8 @@ end
 
 def print(students)
   students.each_with_index do |student, index|
-    if student[:name].start_with?("t") && student[:name].length < 12
-      puts "#{index + 1}: #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].start_with?("T") && student[:name].length < 12
+      puts "#{index + 1}: #{student[:name]} , age: #{student[:age]}, (#{student[:cohort]} cohort)"
     else
     end
   end
