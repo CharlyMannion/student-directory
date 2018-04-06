@@ -1,28 +1,35 @@
 #first we print the list of students
 def input_students
-  puts "Please enter the name, cohort and age of each student (separated by commas e.g. Voldemort, november, 150)"
-  puts "To finish, just hit return twice"
+  puts "Please enter the name, cohort and age of each student"
+  puts "To finish entering names, just type stop"
   #create an empty array
   students = []
   #get the first name
-  individual_student_array = gets.chomp.split(", ")
-  name = individual_student_array[0]
-  cohort = individual_student_array[1]
-  age = individual_student_array[2]
-  #while the name is not empty, repeat this code
-  while !individual_student_array.empty? do
-    #add the student to the hash array
-    students << {name: name, cohort: cohort, age: age}
+  while true do
+    puts "Please enter the name"
+    name = gets.chomp
+    if name == ""
+      name = "Unknown"
+    elsif name == "stop"
+      break
+    end
+    puts "Please enter the cohort"
+    cohort = gets.chomp
+    if cohort == ""
+      cohort = "Unknown"
+    end
+    puts "Please enter the age"
+    age = gets.chomp
+    if age == ""
+      age = "Unknown"
+    end
+    individual_student_hash = {name: name, cohort: cohort, age: age}
+    students << individual_student_hash
     if students.count < 2
       puts "Now we have #{students.count} student"
     else
       puts "Now we have #{students.count} students"
     end
-    #get another name from the user
-    individual_student_array = gets.chomp.split(", ")
-    name = individual_student_array[0]
-    cohort = individual_student_array[1]
-    age = individual_student_array[2]
   end
   #return the array of students
   students
@@ -49,8 +56,28 @@ def print_footer(students)
     puts "Overall we have #{students.count} great students".center(100)
   end
 end
+
+def edit_student(students)
+  puts "Do you want to change any student information? Type Y/N"
+  user_yesno_input = gets.chomp
+  if user_yesno_input == "Y"
+    puts "please enter the number of the student that you want to change"
+    user_studentnumber_input = gets.chomp.to_i - 1
+    puts "What do you want to change: name, age or cohort?"
+    error = gets.chomp.to_sym
+    puts "Please enter the correct #{error} "
+    correction = gets.chomp
+    students[user_studentnumber_input][error] = correction
+    puts "#{error} updated to #{correction}"
+  else
+  end
+end
 #nothing happens until we call the methods
 students = input_students
+print_header
+print(students)
+print_footer(students)
+edit_student(students)
 print_header
 print(students)
 print_footer(students)
