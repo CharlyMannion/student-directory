@@ -35,15 +35,35 @@ def input_students
   students
 end
 
+def set_cohort
+  puts "What is the current cohort?"
+  current_cohort = gets.chomp
+  current_cohort
+end
+
 def print_header
   puts "The students of Villains Academy".center(100)
   puts "-------------".center(100)
 end
 
-def print(students)
+def print(students, current_cohort)
+  cohort_hash = {}
+  students.each do |student|
+    name = student[:name]
+    cohort = student[:cohort]
+    age = student[:age]
+    if cohort_hash[cohort] == nil
+      cohort_hash[cohort] = [name]
+    else
+      cohort_hash[cohort].push(name)
+    end
+  end
+  puts cohort_hash
+  puts cohort_hash[current_cohort]
+  puts "The students in the #{current_cohort} cohort are:"
   students.each_with_index do |student, index|
-    if student[:name].start_with?("T") && student[:name].length < 12
-      puts "#{index + 1}: #{student[:name]} , age: #{student[:age]}, (#{student[:cohort]} cohort)"
+    if cohort_hash[current_cohort].include?(student[:name])
+      puts "#{index + 1}: #{student[:name]}, age: #{student[:age]}, (#{student[:cohort]} cohort)"
     else
     end
   end
@@ -74,10 +94,11 @@ def edit_student(students)
 end
 #nothing happens until we call the methods
 students = input_students
+current_cohort = set_cohort
 print_header
-print(students)
+print(students, current_cohort)
 print_footer(students)
 edit_student(students)
 print_header
-print(students)
+print(students, current_cohort)
 print_footer(students)
