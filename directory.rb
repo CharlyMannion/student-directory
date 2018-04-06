@@ -58,8 +58,6 @@ def print(students, current_cohort)
       cohort_hash[cohort].push(name)
     end
   end
-  puts cohort_hash
-  puts cohort_hash[current_cohort]
   puts "The students in the #{current_cohort} cohort are:"
   students.each_with_index do |student, index|
     if cohort_hash[current_cohort].include?(student[:name])
