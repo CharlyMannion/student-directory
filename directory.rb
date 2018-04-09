@@ -23,10 +23,11 @@ def interactive_menu
 end
 
 def print_menu
+  puts "MAIN MENU:"
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to files"
+  puts "4. Load a list from files"
   puts "9. Exit"
 end
 
@@ -36,9 +37,12 @@ def show_students
   print_footer
 end
 
-def save_students
+def save_students(filename = "students.csv")
+  #ask user for filename
+  puts "Please enter the filename"
+  filename = gets.chomp
   #open the file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(filename, "w")
   #iterate over the array of save_students
   @students.each do |student|
     student_data = student[:name], student[:cohort]
@@ -46,6 +50,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "File saved as #{filename}"
 end
 
 def load_students(filename = "students.csv")
@@ -57,15 +62,20 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-def try_load_students
+def startup_load_students
   filename = ARGV.first #first argument from the command line
-  return if filename.nil? #get out of the method if it isn't given
-  if File.exists?(filename) #if it exists
+  if filename.nil? #if a filename is not given
+    filename = "students.csv"
     load_students(filename)
-    puts "Loaded #{@students.count} from  #{filename}"
-  else #if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit #quit the program
+    puts "Automatically loaded #{@students.count} from #{filename}"
+  else #if a filename is given
+    if File.exists?(filename) #if it exists
+      load_students(filename)
+      puts "Loaded #{@students.count} from  #{filename}"
+    else #if it doesn't exist
+      puts "Sorry, #{filename} doesn't exist."
+      exit #quit the program
+    end
   end
 end
 
@@ -106,5 +116,5 @@ def print_footer
 end
 
 #nothing happens until we call the methods
-try_load_students
+startup_load_students
 interactive_menu
