@@ -61,6 +61,7 @@ def load_students(filename = "students.csv")
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
+  puts "#{filename} imported"
   file.close
 end
 
@@ -77,6 +78,7 @@ def startup_load_students
 end
 
 def process(selection)
+  action_successful(selection)
   case selection
   when "1"
     input_students
@@ -91,6 +93,10 @@ def process(selection)
   else
     puts "I don't know what you meant, try again"
   end
+end
+
+def action_successful(selection)
+    puts "You selected #{selection}"
 end
 
 def print_header
