@@ -54,9 +54,11 @@ def save_students(filename = "students.csv")
 end
 
 def load_students(filename = "students.csv")
+  puts "Please enter a filename"
+  filename = gets.chomp
   file = File.open(filename, "r")
-  file. readlines.each do |line|
-    name, cohort = line.chomp.split(',')
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
@@ -64,18 +66,13 @@ end
 
 def startup_load_students
   filename = ARGV.first #first argument from the command line
-  if filename.nil? #if a filename is not given
-    filename = "students.csv"
+  return if filename.nil? #if a filename is not given
+  if File.exists?(filename) #if it exists
     load_students(filename)
-    puts "Automatically loaded #{@students.count} from #{filename}"
-  else #if a filename is given
-    if File.exists?(filename) #if it exists
-      load_students(filename)
-      puts "Loaded #{@students.count} from  #{filename}"
-    else #if it doesn't exist
-      puts "Sorry, #{filename} doesn't exist."
-      exit #quit the program
-    end
+    puts "Loaded #{@students.count} students from  #{filename}"
+  else #if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist."
+    exit #quit the program
   end
 end
 
