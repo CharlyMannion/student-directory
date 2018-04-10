@@ -1,3 +1,4 @@
+dry.rb
 directory_to_match_steps.rb
 directory_with_exercises.rb
 directoryloop.rb
@@ -6,3 +7,7 @@ inputstudentshash.rb
 prac.rb
 students.csv
 typos.rb
+students2.csv
+students3.csv
+students4.csv
+students5.csv
